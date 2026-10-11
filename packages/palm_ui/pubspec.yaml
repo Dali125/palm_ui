@@ -1,0 +1,20 @@
+name: palm_ui
+description: Mobile-first Flutter component kit with semantic light, dark, and Android dynamic themes.
+version: 0.1.0
+
+environment:
+  sdk: ^3.13.5
+  flutter: ">=3.47.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dynamic_color: ^2.1.0
+  material_color_utilities: ^0.13.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
