@@ -33,7 +33,7 @@ Add `palm_ui` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  palm_ui: ^0.1.1
+  palm_ui: ^0.1.2
 ```
 
 Then run:

@@ -1,3 +1,7 @@
+## 0.1.2
+
+* Added component screenshots to the README and pub.dev listing.
+
 ## 0.1.1
 
 * Enhanced documentation with detailed component usage guide.

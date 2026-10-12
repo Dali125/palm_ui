@@ -1,6 +1,6 @@
 name: palm_ui
 description: Mobile-first Flutter component kit with semantic light, dark, and Android dynamic themes.
-version: 0.1.1
+version: 0.1.2
 repository: https://github.com/Dali125/palm_ui/tree/main/packages/palm_ui
 issue_tracker: https://github.com/Dali125/palm_ui/issues
 
