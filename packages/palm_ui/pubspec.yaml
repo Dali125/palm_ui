@@ -1,8 +1,26 @@
 name: palm_ui
 description: Mobile-first Flutter component kit with semantic light, dark, and Android dynamic themes.
-version: 0.1.1
+version: 0.1.2
 repository: https://github.com/Dali125/palm_ui/tree/main/packages/palm_ui
 issue_tracker: https://github.com/Dali125/palm_ui/issues
+
+screenshots:
+  - description: Buttons, button groups, toggle groups and badges
+    path: doc/screenshots/buttons.png
+  - description: Form controls - input, field, select, checkbox, switch and slider
+    path: doc/screenshots/forms.png
+  - description: Date picker dialog
+    path: doc/screenshots/datepicker.png
+  - description: Dialog with actions
+    path: doc/screenshots/dialog.png
+  - description: Bottom sheet in the dark theme
+    path: doc/screenshots/sheet_dark.png
+  - description: Data table with pagination
+    path: doc/screenshots/datatable.png
+  - description: Toasts and alerts
+    path: doc/screenshots/toast.png
+  - description: Dark theme - cards, tabs, buttons, inputs and progress
+    path: doc/screenshots/dark.png
 
 
 environment:
