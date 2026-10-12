@@ -7,6 +7,16 @@ A mobile-first Flutter component system and design kit inspired by **shadcn/ui**
 
 ---
 
+## Screenshots
+
+| Buttons & badges | Form controls | Date picker | Dialog |
+|---|---|---|---|
+| <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/buttons.png" width="200" alt="Buttons, button groups, toggle groups and badges"> | <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/forms.png" width="200" alt="Form controls - input, field, select, checkbox, switch and slider"> | <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/datepicker.png" width="200" alt="Date picker dialog"> | <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/dialog.png" width="200" alt="Dialog with actions"> |
+
+| Bottom sheet (dark) | Data table | Toasts & alerts | Dark theme |
+|---|---|---|---|
+| <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/sheet_dark.png" width="200" alt="Bottom sheet in the dark theme"> | <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/datatable.png" width="200" alt="Data table with pagination"> | <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/toast.png" width="200" alt="Toasts and alerts"> | <img src="https://raw.githubusercontent.com/Dali125/palm_ui/main/packages/palm_ui/doc/screenshots/dark.png" width="200" alt="Dark theme - cards, tabs, buttons, inputs and progress"> |
+
 ## Features
 
 - 📱 **Mobile-First Touch Ergonomics**: Generous hit targets, smooth bottom sheets, drawer interactions, and responsive navigation.
