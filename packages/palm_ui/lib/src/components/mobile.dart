@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../theme/palm_ui_theme.dart';
 
+/// A themed top app bar with a title, optional leading widget and actions.
+///
+/// Adds the status bar inset to its height.
 class PalmUIAppBar extends StatelessWidget implements PreferredSizeWidget {
+  /// Creates an app bar.
   const PalmUIAppBar({
     super.key,
     required this.title,
@@ -11,9 +15,17 @@ class PalmUIAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.height = 56,
   });
 
+  /// The title, usually a [Text].
   final Widget title;
+
+  /// A widget before the title, such as a back button.
   final Widget? leading;
+
+  /// Widgets after the title, usually icon buttons.
   final List<Widget>? actions;
+
+  /// The bar height in logical pixels, not counting the status bar. Defaults
+  /// to 56.
   final double height;
 
   @override
@@ -65,10 +77,15 @@ class PalmUIAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
+/// A round floating action button in the primary color.
 class PalmUIFab extends StatelessWidget {
+  /// Creates a floating action button.
   const PalmUIFab({super.key, required this.onPressed, required this.child});
 
+  /// Called when the button is tapped. A null value disables it.
   final VoidCallback? onPressed;
+
+  /// The button content, usually an [Icon].
   final Widget child;
 
   @override
@@ -95,7 +112,9 @@ class PalmUIFab extends StatelessWidget {
   }
 }
 
+/// A full-width list row with a title, optional subtitle and side widgets.
 class PalmUIListTile extends StatelessWidget {
+  /// Creates a list tile.
   const PalmUIListTile({
     super.key,
     required this.title,
@@ -105,10 +124,19 @@ class PalmUIListTile extends StatelessWidget {
     this.onTap,
   });
 
+  /// The main text.
   final Widget title;
+
+  /// Secondary text shown under [title].
   final Widget? subtitle;
+
+  /// A widget before the text, such as an icon or avatar.
   final Widget? leading;
+
+  /// A widget after the text, such as a switch or chevron.
   final Widget? trailing;
+
+  /// Called when the row is tapped. When null the row is not tappable.
   final VoidCallback? onTap;
 
   @override

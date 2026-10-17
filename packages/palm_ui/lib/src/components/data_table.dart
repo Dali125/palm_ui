@@ -4,20 +4,34 @@ import 'package:flutter/material.dart';
 
 import '../theme/palm_ui_theme.dart';
 
+/// A column in a [PalmUIDataTable].
 class PalmUIDataColumn {
+  /// Creates a column. [id] is the key into [PalmUIDataRow.cells].
   const PalmUIDataColumn({required this.id, required this.label});
 
+  /// Key used to look up this column's value in each [PalmUIDataRow.cells].
   final String id;
+
+  /// Header text shown for the column. Tapping it sorts the table.
   final String label;
 }
 
+/// A row in a [PalmUIDataTable].
 class PalmUIDataRow {
+  /// Creates a row from a map of column id to cell text.
   const PalmUIDataRow({required this.cells});
 
+  /// Cell text keyed by [PalmUIDataColumn.id]. Missing keys render empty.
   final Map<String, String> cells;
 }
 
+/// A sortable, paginated table of text cells.
+///
+/// Tap a column header to sort by it, and tap again to reverse the order.
+/// Values are compared as text.
 class PalmUIDataTable extends StatefulWidget {
+  /// Creates a data table with [columns] and [rows], showing [pageSize] rows
+  /// per page.
   const PalmUIDataTable({
     super.key,
     required this.columns,
@@ -25,8 +39,13 @@ class PalmUIDataTable extends StatefulWidget {
     this.pageSize = 5,
   });
 
+  /// The columns, in display order.
   final List<PalmUIDataColumn> columns;
+
+  /// All rows. The table sorts and paginates them itself.
   final List<PalmUIDataRow> rows;
+
+  /// How many rows are shown per page. Defaults to 5.
   final int pageSize;
 
   @override

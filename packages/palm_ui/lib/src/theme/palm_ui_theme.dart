@@ -9,6 +9,10 @@ const double kPalmUIMinTouchTarget = 44;
 /// Palm UI semantic roles, shared corner radius, and light/dark presets.
 @immutable
 class PalmUIThemeData {
+  /// Creates a theme from explicit role colors and a corner [radius].
+  ///
+  /// Most apps start from [PalmUIThemeData.light], [PalmUIThemeData.dark] or
+  /// [PalmUIThemeData.fromColorScheme] and adjust them with [copyWith].
   const PalmUIThemeData({
     required this.brightness,
     required this.background,
@@ -33,25 +37,64 @@ class PalmUIThemeData {
     required this.radius,
   });
 
+  /// Whether this is a light or dark theme.
   final Brightness brightness;
+
+  /// The page background color.
   final Color background;
+
+  /// The default text and icon color on [background].
   final Color foreground;
+
+  /// The surface color of cards.
   final Color card;
+
+  /// Text and icon color on [card].
   final Color cardForeground;
+
+  /// The surface color of menus, dialogs, sheets and toasts.
   final Color popover;
+
+  /// Text and icon color on [popover].
   final Color popoverForeground;
+
+  /// The brand color for primary buttons, selected states and progress.
   final Color primary;
+
+  /// Text and icon color on [primary].
   final Color primaryForeground;
+
+  /// The fill color of secondary buttons and progress tracks.
   final Color secondary;
+
+  /// Text and icon color on [secondary].
   final Color secondaryForeground;
+
+  /// Subtle fill color for skeletons, table headers and switch tracks.
   final Color muted;
+
+  /// Color for placeholders, hints and secondary text.
   final Color mutedForeground;
+
+  /// Highlight color for selected tabs, toggles and hovered items.
   final Color accent;
+
+  /// Text and icon color on [accent].
   final Color accentForeground;
+
+  /// Color for errors and destructive actions.
   final Color destructive;
+
+  /// Text and icon color on [destructive].
   final Color destructiveForeground;
+
+  /// Color of borders and dividers.
   final Color border;
+
+  /// Border color of inputs and selects.
   final Color input;
+
+  /// Focus ring color, also used for the text cursor.
   final Color ring;
 
   /// Corner radius in logical pixels. the default 0.625rem is 10.
@@ -146,6 +189,7 @@ class PalmUIThemeData {
     );
   }
 
+  /// Returns a copy of this theme with the given roles replaced.
   PalmUIThemeData copyWith({
     Brightness? brightness,
     Color? background,
@@ -195,6 +239,9 @@ class PalmUIThemeData {
     );
   }
 
+  /// Builds a Material [ThemeData] that matches this theme, for
+  /// [MaterialApp.theme], so Material widgets used beside Palm UI look
+  /// consistent.
   ThemeData toThemeData() {
     final base = brightness == Brightness.dark
         ? ColorScheme.dark()
@@ -284,10 +331,14 @@ class PalmUIThemeData {
 
 /// Provides [PalmUIThemeData] to descendant Palm UI widgets.
 class PalmUITheme extends InheritedWidget {
+  /// Provides [data] to the Palm UI widgets below it.
   const PalmUITheme({super.key, required this.data, required super.child});
 
+  /// The theme for this subtree.
   final PalmUIThemeData data;
 
+  /// The nearest theme above [context], or [PalmUIThemeData.light] when there
+  /// is none.
   static PalmUIThemeData of(BuildContext context) {
     final scope = context.dependOnInheritedWidgetOfExactType<PalmUITheme>();
     return scope?.data ?? PalmUIThemeData.light();

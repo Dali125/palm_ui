@@ -19,17 +19,24 @@ const _months = [
   'December',
 ];
 
+/// Formats [date] as an ISO 8601 calendar date, for example `2026-10-17`.
+///
+/// Used by [PalmUIDatePicker] for its label.
 String formatPalmUIDate(DateTime date) {
   final month = date.month.toString().padLeft(2, '0');
   final day = date.day.toString().padLeft(2, '0');
   return '${date.year}-$month-$day';
 }
 
-bool palmUISameDay(DateTime a, DateTime b) {
+bool _sameDay(DateTime a, DateTime b) {
   return a.year == b.year && a.month == b.month && a.day == b.day;
 }
 
+/// A month grid for choosing a single day, with previous and next month
+/// controls.
 class PalmUICalendar extends StatefulWidget {
+  /// Creates a calendar. [selected] is highlighted and [onSelected] is called
+  /// when the user taps a day.
   const PalmUICalendar({
     super.key,
     this.selected,
@@ -37,8 +44,15 @@ class PalmUICalendar extends StatefulWidget {
     this.initialMonth,
   });
 
+  /// The currently selected day, highlighted in the grid. Only the date part
+  /// is compared.
   final DateTime? selected;
+
+  /// Called with the tapped day.
   final ValueChanged<DateTime>? onSelected;
+
+  /// The month shown first. Defaults to the month of [selected], or the
+  /// current month.
   final DateTime? initialMonth;
 
   @override
@@ -68,7 +82,7 @@ class _PalmUICalendarState extends State<PalmUICalendar> {
     for (var day = 1; day <= daysInMonth; day++) {
       final date = DateTime(_month.year, _month.month, day);
       final selected =
-          widget.selected != null && palmUISameDay(widget.selected!, date);
+          widget.selected != null && _sameDay(widget.selected!, date);
       cells.add(
         _DayCell(
           day: day,
@@ -194,7 +208,10 @@ class _DayCell extends StatelessWidget {
   }
 }
 
+/// A button that opens a [PalmUICalendar] in a dialog and shows the chosen
+/// date.
 class PalmUIDatePicker extends StatefulWidget {
+  /// Creates a date picker showing [value] or [placeholder].
   const PalmUIDatePicker({
     super.key,
     this.value,
@@ -203,9 +220,16 @@ class PalmUIDatePicker extends StatefulWidget {
     this.initialMonth,
   });
 
+  /// The chosen date, or null when nothing has been picked.
   final DateTime? value;
+
+  /// Called with the date the user picks in the dialog.
   final ValueChanged<DateTime>? onChanged;
+
+  /// The button label while [value] is null.
   final String placeholder;
+
+  /// The month the calendar opens on. Defaults to the month of [value].
   final DateTime? initialMonth;
 
   @override

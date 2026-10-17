@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:palm_ui/dynamic_color.dart';
 import 'package:palm_ui/palm_ui.dart';
 
 import 'catalog.dart';

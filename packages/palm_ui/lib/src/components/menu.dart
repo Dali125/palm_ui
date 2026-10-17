@@ -4,23 +4,35 @@ import 'package:flutter/material.dart';
 
 import '../theme/palm_ui_theme.dart';
 
+/// An entry in a Palm UI menu.
 class PalmUIMenuItem {
+  /// Creates a menu item with a [label].
   const PalmUIMenuItem({
     required this.label,
     this.onSelected,
     this.destructive = false,
   });
 
+  /// The item text.
   final String label;
+
+  /// Called when the item is chosen. The menu closes first.
   final VoidCallback? onSelected;
+
+  /// Whether to show the item in the destructive color.
   final bool destructive;
 }
 
+/// The global rectangle of the widget for [context], used to place menus
+/// and popovers next to it.
 Rect palmUIAnchorRect(BuildContext context) {
   final box = context.findRenderObject()! as RenderBox;
   return box.localToGlobal(Offset.zero) & box.size;
 }
 
+/// Shows a popup menu of [items] next to [anchor].
+///
+/// Completes when the menu closes.
 Future<void> showPalmUIMenu({
   required BuildContext context,
   required Rect anchor,
@@ -130,14 +142,19 @@ class _PalmUIMenuPanel extends StatelessWidget {
   }
 }
 
+/// Shows a menu of [items] below [child] when [child] is tapped.
 class PalmUIDropdownMenu extends StatelessWidget {
+  /// Creates a dropdown menu.
   const PalmUIDropdownMenu({
     super.key,
     required this.items,
     required this.child,
   });
 
+  /// The menu entries.
   final List<PalmUIMenuItem> items;
+
+  /// The trigger, usually a button.
   final Widget child;
 
   @override
@@ -150,14 +167,19 @@ class PalmUIDropdownMenu extends StatelessWidget {
   }
 }
 
+/// Shows a menu of [items] when [child] is long-pressed.
 class PalmUIContextMenu extends StatelessWidget {
+  /// Creates a context menu.
   const PalmUIContextMenu({
     super.key,
     required this.items,
     required this.child,
   });
 
+  /// The menu entries.
   final List<PalmUIMenuItem> items;
+
+  /// The widget that opens the menu on long press.
   final Widget child;
 
   @override

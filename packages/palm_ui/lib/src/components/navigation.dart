@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 
+import '../foundation/tap_target.dart';
 import '../theme/palm_ui_theme.dart';
 import 'menu.dart';
 
+/// A section in a [PalmUIAccordion].
 class PalmUIAccordionEntry {
+  /// Creates an accordion section.
   const PalmUIAccordionEntry({required this.title, required this.content});
 
+  /// The header that toggles the section.
   final Widget title;
+
+  /// The content shown while the section is open.
   final Widget content;
 }
 
+/// A vertical list of collapsible sections.
 class PalmUIAccordion extends StatefulWidget {
+  /// Creates an accordion from [entries].
   const PalmUIAccordion({
     super.key,
     required this.entries,
     this.allowMultiple = false,
   });
 
+  /// The sections, in order.
   final List<PalmUIAccordionEntry> entries;
+
+  /// Whether several sections can be open at once. Defaults to false.
   final bool allowMultiple;
 
   @override
@@ -103,7 +114,9 @@ class _PalmUIAccordionState extends State<PalmUIAccordion> {
   }
 }
 
+/// A header that shows or hides [child] when tapped.
 class PalmUICollapsible extends StatefulWidget {
+  /// Creates a collapsible section.
   const PalmUICollapsible({
     super.key,
     required this.title,
@@ -111,8 +124,13 @@ class PalmUICollapsible extends StatefulWidget {
     this.initiallyOpen = false,
   });
 
+  /// The header that toggles the content.
   final Widget title;
+
+  /// The content shown while open.
   final Widget child;
+
+  /// Whether the content starts open. Defaults to false.
   final bool initiallyOpen;
 
   @override
@@ -158,7 +176,12 @@ class _PalmUICollapsibleState extends State<PalmUICollapsible> {
   }
 }
 
+/// A single tab button, as used by [PalmUITabs].
+///
+/// It is announced as a selected or unselected button with its [label] and can
+/// be activated with the keyboard.
 class PalmUITab extends StatelessWidget {
+  /// Creates a tab.
   const PalmUITab({
     super.key,
     required this.label,
@@ -166,16 +189,24 @@ class PalmUITab extends StatelessWidget {
     required this.onTap,
   });
 
+  /// The tab text, also used as its accessibility label.
   final String label;
+
+  /// Whether this is the current tab.
   final bool selected;
+
+  /// Called when the tab is tapped.
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = PalmUITheme.of(context);
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return PalmUITapTarget(
       onTap: onTap,
+      button: true,
+      selected: selected,
+      semanticLabel: label,
+      excludeChildSemantics: true,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: 64,
@@ -206,10 +237,15 @@ class PalmUITab extends StatelessWidget {
   }
 }
 
+/// A row of tabs that switches between [children].
 class PalmUITabs extends StatefulWidget {
+  /// Creates tabs. [tabs] and [children] must have the same length.
   const PalmUITabs({super.key, required this.tabs, required this.children});
 
+  /// The tab labels.
   final List<String> tabs;
+
+  /// The content for each tab, in the same order as [tabs].
   final List<Widget> children;
 
   @override
@@ -253,16 +289,24 @@ class _PalmUITabsState extends State<PalmUITabs> {
   }
 }
 
+/// A link in a [PalmUIBreadcrumb].
 class PalmUIBreadcrumbItem {
+  /// Creates a breadcrumb item.
   const PalmUIBreadcrumbItem({required this.label, this.onTap});
 
+  /// The item text.
   final String label;
+
+  /// Called when the item is tapped. Leave null for the current page.
   final VoidCallback? onTap;
 }
 
+/// A horizontal trail of links that shows where the user is.
 class PalmUIBreadcrumb extends StatelessWidget {
+  /// Creates a breadcrumb from [items].
   const PalmUIBreadcrumb({super.key, required this.items});
 
+  /// The trail, from the root to the current page.
   final List<PalmUIBreadcrumbItem> items;
 
   @override
@@ -310,7 +354,9 @@ class PalmUIBreadcrumb extends StatelessWidget {
   }
 }
 
+/// Previous, numbered and next page buttons.
 class PalmUIPagination extends StatelessWidget {
+  /// Creates pagination controls.
   const PalmUIPagination({
     super.key,
     required this.page,
@@ -318,8 +364,13 @@ class PalmUIPagination extends StatelessWidget {
     required this.onPageChanged,
   });
 
+  /// The current page, starting at 1.
   final int page;
+
+  /// The total number of pages.
   final int pageCount;
+
+  /// Called with the page the user picks.
   final ValueChanged<int>? onPageChanged;
 
   @override
@@ -401,16 +452,24 @@ class _PageButton extends StatelessWidget {
   }
 }
 
+/// A top-level menu in a [PalmUIMenubar].
 class PalmUIMenuBarMenu {
+  /// Creates a menubar menu.
   const PalmUIMenuBarMenu({required this.label, required this.items});
 
+  /// The text shown in the bar.
   final String label;
+
+  /// The entries shown when the menu opens.
   final List<PalmUIMenuItem> items;
 }
 
+/// A horizontal bar of menus, each opening a popup menu.
 class PalmUIMenubar extends StatelessWidget {
+  /// Creates a menubar.
   const PalmUIMenubar({super.key, required this.menus});
 
+  /// The menus, in order.
   final List<PalmUIMenuBarMenu> menus;
 
   @override
@@ -460,16 +519,24 @@ class PalmUIMenubar extends StatelessWidget {
   }
 }
 
+/// An entry in a [PalmUINavigationMenu].
 class PalmUINavMenuEntry {
+  /// Creates a navigation menu entry.
   const PalmUINavMenuEntry({required this.label, required this.content});
 
+  /// The text shown in the menu row.
   final String label;
+
+  /// The panel shown when the entry is open.
   final Widget content;
 }
 
+/// A row of entries that each reveal a content panel below.
 class PalmUINavigationMenu extends StatefulWidget {
+  /// Creates a navigation menu.
   const PalmUINavigationMenu({super.key, required this.entries});
 
+  /// The entries, in order.
   final List<PalmUINavMenuEntry> entries;
 
   @override
@@ -537,14 +604,24 @@ class _PalmUINavigationMenuState extends State<PalmUINavigationMenu> {
   }
 }
 
+/// A destination in a [PalmUISidebar].
 class PalmUISidebarEntry {
+  /// Creates a sidebar entry.
   const PalmUISidebarEntry({required this.label, required this.icon});
 
+  /// The entry text.
   final String label;
+
+  /// The entry icon.
   final IconData icon;
 }
 
+/// A side navigation panel.
+///
+/// On screens at least [breakpoint] wide the panel is always shown; on
+/// narrower screens it slides over [body] and is opened with a menu button.
 class PalmUISidebar extends StatefulWidget {
+  /// Creates a sidebar.
   const PalmUISidebar({
     super.key,
     required this.entries,
@@ -554,10 +631,19 @@ class PalmUISidebar extends StatefulWidget {
     this.breakpoint = 768,
   });
 
+  /// The navigation entries.
   final List<PalmUISidebarEntry> entries;
+
+  /// The main content beside or under the panel.
   final Widget body;
+
+  /// The index of the current entry. Defaults to 0.
   final int selectedIndex;
+
+  /// Called with the index of the entry the user taps.
   final ValueChanged<int>? onSelected;
+
+  /// The width at which the panel is shown permanently. Defaults to 768.
   final double breakpoint;
 
   @override
@@ -693,14 +779,24 @@ class _SidebarPanel extends StatelessWidget {
   }
 }
 
+/// A destination in a [PalmUIBottomNav].
 class PalmUINavDestination {
+  /// Creates a bottom navigation destination.
   const PalmUINavDestination({required this.icon, required this.label});
 
+  /// The destination icon.
   final IconData icon;
+
+  /// The destination label.
   final String label;
 }
 
+/// A single destination button in a [PalmUIBottomNav].
+///
+/// It fills its share of the bar, is announced as a selected or unselected
+/// button with its [label], and can be activated with the keyboard.
 class PalmUIBottomNavItem extends StatelessWidget {
+  /// Creates a bottom navigation item.
   const PalmUIBottomNavItem({
     super.key,
     required this.icon,
@@ -709,9 +805,16 @@ class PalmUIBottomNavItem extends StatelessWidget {
     required this.onTap,
   });
 
+  /// The icon shown above the label.
   final IconData icon;
+
+  /// The text under the icon, also used as the accessibility label.
   final String label;
+
+  /// Whether this is the current destination.
   final bool selected;
+
+  /// Called when the item is tapped.
   final VoidCallback onTap;
 
   @override
@@ -719,9 +822,12 @@ class PalmUIBottomNavItem extends StatelessWidget {
     final theme = PalmUITheme.of(context);
     final color = selected ? theme.foreground : theme.mutedForeground;
     return Expanded(
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
+      child: PalmUITapTarget(
         onTap: onTap,
+        button: true,
+        selected: selected,
+        semanticLabel: label,
+        excludeChildSemantics: true,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: kPalmUIMinTouchTarget),
           child: Column(
@@ -738,7 +844,9 @@ class PalmUIBottomNavItem extends StatelessWidget {
   }
 }
 
+/// A bottom navigation bar for switching between top-level screens.
 class PalmUIBottomNav extends StatelessWidget {
+  /// Creates a bottom navigation bar.
   const PalmUIBottomNav({
     super.key,
     required this.destinations,
@@ -746,8 +854,13 @@ class PalmUIBottomNav extends StatelessWidget {
     required this.onSelected,
   });
 
+  /// The destinations, in order.
   final List<PalmUINavDestination> destinations;
+
+  /// The index of the current destination.
   final int selectedIndex;
+
+  /// Called with the index of the destination the user taps.
   final ValueChanged<int> onSelected;
 
   @override
