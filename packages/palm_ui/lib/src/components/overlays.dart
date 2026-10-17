@@ -5,8 +5,25 @@ import 'package:flutter/material.dart';
 import '../theme/palm_ui_theme.dart';
 import 'button.dart';
 
-enum PalmUISheetSide { top, bottom, left, right }
+/// The screen edge a sheet or drawer slides in from.
+enum PalmUISheetSide {
+  /// The top edge.
+  top,
 
+  /// The bottom edge, the usual choice on phones.
+  bottom,
+
+  /// The left edge.
+  left,
+
+  /// The right edge.
+  right,
+}
+
+/// Shows a centred, fading dialog built by [builder].
+///
+/// Returns the value passed to [Navigator.pop]. Tapping the barrier closes the
+/// dialog unless [barrierDismissible] is false.
 Future<T?> showPalmUIDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -42,11 +59,20 @@ Future<T?> showPalmUIDialog<T>({
   );
 }
 
+/// A dialog surface with an optional title, content and action row.
+///
+/// Show it with [showPalmUIDialog].
 class PalmUIDialog extends StatelessWidget {
+  /// Creates a dialog.
   const PalmUIDialog({super.key, this.title, this.content, this.actions});
 
+  /// The dialog heading.
   final Widget? title;
+
+  /// The dialog body.
   final Widget? content;
+
+  /// Buttons shown in a row at the bottom.
   final List<Widget>? actions;
 
   @override
@@ -96,7 +122,11 @@ class PalmUIDialog extends StatelessWidget {
   }
 }
 
+/// A confirmation dialog with cancel and confirm buttons.
+///
+/// Usually shown with [showPalmUIAlertDialog].
 class PalmUIAlertDialog extends StatelessWidget {
+  /// Creates an alert dialog.
   const PalmUIAlertDialog({
     super.key,
     required this.title,
@@ -108,12 +138,25 @@ class PalmUIAlertDialog extends StatelessWidget {
     this.destructive = false,
   });
 
+  /// The question or heading.
   final Widget title;
+
+  /// Supporting text under [title].
   final Widget? description;
+
+  /// The cancel button text. Defaults to `Cancel`.
   final String cancelLabel;
+
+  /// The confirm button text. Defaults to `Continue`.
   final String confirmLabel;
+
+  /// Called when the cancel button is tapped.
   final VoidCallback? onCancel;
+
+  /// Called when the confirm button is tapped.
   final VoidCallback? onConfirm;
+
+  /// Whether the confirm button uses the destructive style.
   final bool destructive;
 
   @override
@@ -139,6 +182,8 @@ class PalmUIAlertDialog extends StatelessWidget {
   }
 }
 
+/// Shows a [PalmUIAlertDialog] and completes with true when confirmed,
+/// false when cancelled, or null when dismissed.
 Future<bool?> showPalmUIAlertDialog({
   required BuildContext context,
   required Widget title,
@@ -163,6 +208,9 @@ Future<bool?> showPalmUIAlertDialog({
   );
 }
 
+/// Slides in a panel built by [builder] from the given [side].
+///
+/// Returns the value passed to [Navigator.pop].
 Future<T?> showPalmUISheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -210,14 +258,20 @@ Future<T?> showPalmUISheet<T>({
   );
 }
 
+/// The panel surface used by [showPalmUISheet], with corners rounded on the
+/// edge facing the screen.
 class PalmUISheet extends StatelessWidget {
+  /// Creates a sheet.
   const PalmUISheet({
     super.key,
     required this.child,
     this.side = PalmUISheetSide.bottom,
   });
 
+  /// The sheet content.
   final Widget child;
+
+  /// The screen edge the sheet is attached to. Defaults to the bottom.
   final PalmUISheetSide side;
 
   @override
@@ -241,10 +295,15 @@ class PalmUISheet extends StatelessWidget {
   }
 }
 
+/// A side panel with an optional title, shown with [showPalmUIDrawer].
 class PalmUIDrawer extends StatelessWidget {
+  /// Creates a drawer.
   const PalmUIDrawer({super.key, required this.child, this.title});
 
+  /// The drawer content.
   final Widget child;
+
+  /// The drawer heading.
   final Widget? title;
 
   @override
@@ -274,6 +333,7 @@ class PalmUIDrawer extends StatelessWidget {
   }
 }
 
+/// Slides in a [PalmUIDrawer] from [side], which defaults to the left.
 Future<T?> showPalmUIDrawer<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -289,14 +349,20 @@ Future<T?> showPalmUIDrawer<T>({
   );
 }
 
+/// Shows [content] in a floating card below [trigger] when it is tapped.
+/// Tap the trigger again to close it.
 class PalmUIPopover extends StatefulWidget {
+  /// Creates a popover.
   const PalmUIPopover({
     super.key,
     required this.trigger,
     required this.content,
   });
 
+  /// The widget that opens the popover.
   final Widget trigger;
+
+  /// The content of the floating card.
   final Widget content;
 
   @override
@@ -334,14 +400,20 @@ class _PalmUIPopoverState extends State<PalmUIPopover> {
   }
 }
 
+/// Shows a preview card with [content] below [trigger] when it is tapped.
+/// Tap the trigger again to close it.
 class PalmUIHoverCard extends StatefulWidget {
+  /// Creates a hover card.
   const PalmUIHoverCard({
     super.key,
     required this.trigger,
     required this.content,
   });
 
+  /// The widget that opens the card.
   final Widget trigger;
+
+  /// The content of the floating card.
   final Widget content;
 
   @override
@@ -379,10 +451,15 @@ class _PalmUIHoverCardState extends State<PalmUIHoverCard> {
   }
 }
 
+/// Shows [message] in a small floating card when [child] is tapped.
 class PalmUITooltip extends StatefulWidget {
+  /// Creates a tooltip.
   const PalmUITooltip({super.key, required this.message, required this.child});
 
+  /// The tooltip text.
   final String message;
+
+  /// The widget the tooltip describes.
   final Widget child;
 
   @override
@@ -469,11 +546,18 @@ class _PalmUIFloatLayer {
   }
 }
 
+/// Hosts toasts for its subtree. Place it once near the top of the app,
+/// for example in [MaterialApp.builder].
+///
+/// Show toasts with [PalmUIToast.show].
 class PalmUIToaster extends StatefulWidget {
+  /// Creates a toaster around [child].
   const PalmUIToaster({super.key, required this.child});
 
+  /// The app content.
   final Widget child;
 
+  /// The nearest toaster state above [context]. Asserts that one exists.
   static PalmUIToasterState of(BuildContext context) {
     final state = context.findAncestorStateOfType<PalmUIToasterState>();
     assert(
@@ -487,11 +571,19 @@ class PalmUIToaster extends StatefulWidget {
   State<PalmUIToaster> createState() => PalmUIToasterState();
 }
 
+/// State for [PalmUIToaster]. Shows one toast at a time.
 class PalmUIToasterState extends State<PalmUIToaster> {
+  /// Creates the state. Created by [PalmUIToaster]; reach it with
+  /// [PalmUIToaster.of] or [PalmUIToast].
+  PalmUIToasterState();
+
+  /// The message currently shown, or null when no toast is visible.
   String? message;
 
+  /// Shows a toast with [value], replacing any current toast.
   void show(String value) => setState(() => message = value);
 
+  /// Hides the current toast.
   void dismiss() => setState(() => message = null);
 
   @override
@@ -512,22 +604,30 @@ class PalmUIToasterState extends State<PalmUIToaster> {
   }
 }
 
+/// Static helpers for showing toasts through the nearest [PalmUIToaster].
 class PalmUIToast {
   const PalmUIToast._();
 
+  /// Shows a toast with [message].
   static void show(BuildContext context, {required String message}) {
     PalmUIToaster.of(context).show(message);
   }
 
+  /// Hides the current toast.
   static void dismiss(BuildContext context) {
     PalmUIToaster.of(context).dismiss();
   }
 }
 
+/// The card used to render a toast.
 class PalmUIToastCard extends StatelessWidget {
+  /// Creates a toast card.
   const PalmUIToastCard({super.key, required this.message, this.onDismiss});
 
+  /// The toast text.
   final String message;
+
+  /// Called by the dismiss button. When null no button is shown.
   final VoidCallback? onDismiss;
 
   @override

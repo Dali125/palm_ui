@@ -22,7 +22,8 @@ A mobile-first Flutter component system and design kit inspired by **shadcn/ui**
 - 📱 **Mobile-First Touch Ergonomics**: Generous hit targets, smooth bottom sheets, drawer interactions, and responsive navigation.
 - 🎨 **Semantic Color System**: Predictable design tokens (`background`, `foreground`, `primary`, `muted`, `accent`, `destructive`, etc.) matching shadcn/ui conventions.
 - 🌓 **Light & Dark Presets**: Carefully tuned contrast ratios for both light and dark modes out of the box.
-- 🤖 **Android Dynamic Theming**: Direct integration with system accent palettes on Android 12+ via `dynamic_color`.
+- 🤖 **Android Dynamic Theming**: Direct integration with system accent palettes on Android 12+ via `dynamic_color`, in the optional `package:palm_ui/dynamic_color.dart` library.
+- ♿ **Accessible Controls**: Checkboxes, radios, switches, tabs, bottom navigation and buttons expose screen reader roles and states, and work with a keyboard.
 - 🧩 **50+ Pre-built Components**: Complete UI building blocks including buttons, inputs, form fields, dialogs, drawers, date pickers, data tables, toasts, and menus.
 
 ---
@@ -33,7 +34,7 @@ Add `palm_ui` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  palm_ui: ^0.1.2
+  palm_ui: ^0.2.0
 ```
 
 Then run:
@@ -81,9 +82,16 @@ class MyApp extends StatelessWidget {
 
 ### Material You Dynamic Colors (Android 12+)
 
-To adapt to your user's system wallpaper palette on Android devices:
+To adapt to your user's system wallpaper palette on Android devices, import the
+separate `dynamic_color` library. It is kept out of `palm_ui.dart` so apps that
+don't need it don't depend on the `dynamic_color` plugin. `PalmUIDynamicThemes.load()`
+is safe on every platform: on iOS, web, and Android 11 or older it simply reports
+`isAvailable == false`.
 
 ```dart
+import 'package:palm_ui/palm_ui.dart';
+import 'package:palm_ui/dynamic_color.dart';
+
 class _AppState extends State<App> {
   PalmUIDynamicThemes _dynamic = const PalmUIDynamicThemes();
 

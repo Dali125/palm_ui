@@ -10,5 +10,4 @@ export 'src/components/menu.dart';
 export 'src/components/mobile.dart';
 export 'src/components/navigation.dart';
 export 'src/components/overlays.dart';
-export 'src/theme/dynamic_theme.dart';
 export 'src/theme/palm_ui_theme.dart';
