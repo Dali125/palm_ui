@@ -1,7 +1,7 @@
 name: palm_ui_example
 description: Sample app that uses palm_ui.
 publish_to: "none"
-version: 0.1.2
+version: 0.2.0
 
 environment:
   sdk: ^3.13.5
@@ -15,6 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true

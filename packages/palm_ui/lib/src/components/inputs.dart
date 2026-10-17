@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../foundation/tap_target.dart';
 import '../theme/palm_ui_theme.dart';
 import 'menu.dart';
 
+/// Applies the Palm UI label style to [child].
 class PalmUILabel extends StatelessWidget {
+  /// Creates a label.
   const PalmUILabel({super.key, required this.child});
 
+  /// The label content, usually a [Text].
   final Widget child;
 
   @override
@@ -22,7 +26,9 @@ class PalmUILabel extends StatelessWidget {
   }
 }
 
+/// A form field layout: a label, the control, and a hint or error message.
 class PalmUIField extends StatelessWidget {
+  /// Creates a field around the control [child].
   const PalmUIField({
     super.key,
     required this.child,
@@ -31,9 +37,17 @@ class PalmUIField extends StatelessWidget {
     this.error,
   });
 
+  /// The form control, such as a [PalmUIInput].
   final Widget child;
+
+  /// The label shown above the control.
   final Widget? label;
+
+  /// Helper text shown under the control when there is no [error].
   final String? hint;
+
+  /// An error message shown under the control in the destructive color.
+  /// Replaces [hint] when not empty.
   final String? error;
 
   @override
@@ -67,7 +81,9 @@ class PalmUIField extends StatelessWidget {
   }
 }
 
+/// A themed single or multi-line text input.
 class PalmUIInput extends StatelessWidget {
+  /// Creates a text input.
   const PalmUIInput({
     super.key,
     this.controller,
@@ -87,17 +103,40 @@ class PalmUIInput extends StatelessWidget {
     ),
   });
 
+  /// Controls the text being edited.
   final TextEditingController? controller;
+
+  /// Placeholder text shown when the input is empty.
   final String? hint;
+
+  /// Called whenever the text changes.
   final ValueChanged<String>? onChanged;
+
+  /// Whether to hide the text, for passwords. Forces a single line.
   final bool obscureText;
+
+  /// Whether the input accepts input. Defaults to true.
   final bool enabled;
+
+  /// The type of keyboard to show.
   final TextInputType? keyboardType;
+
+  /// The focus node for the input.
   final FocusNode? focusNode;
+
+  /// The maximum number of lines. Defaults to 1.
   final int maxLines;
+
+  /// Called when the user submits from the keyboard.
   final ValueChanged<String>? onSubmitted;
+
+  /// Whether to draw the input border. Defaults to true.
   final bool bordered;
+
+  /// Padding around the text inside the input.
   final EdgeInsetsGeometry contentPadding;
+
+  /// How the text is aligned horizontally.
   final TextAlign textAlign;
 
   @override
@@ -142,7 +181,9 @@ class PalmUIInput extends StatelessWidget {
   }
 }
 
+/// A multi-line [PalmUIInput] for longer text.
 class PalmUITextarea extends StatelessWidget {
+  /// Creates a textarea.
   const PalmUITextarea({
     super.key,
     this.controller,
@@ -152,10 +193,19 @@ class PalmUITextarea extends StatelessWidget {
     this.enabled = true,
   });
 
+  /// Controls the text being edited.
   final TextEditingController? controller;
+
+  /// Placeholder text shown when the textarea is empty.
   final String? hint;
+
+  /// Called whenever the text changes.
   final ValueChanged<String>? onChanged;
+
+  /// The visible number of lines. Defaults to 4.
   final int minLines;
+
+  /// Whether the textarea accepts input. Defaults to true.
   final bool enabled;
 
   @override
@@ -171,7 +221,9 @@ class PalmUITextarea extends StatelessWidget {
   }
 }
 
+/// A bordered row that places a [prefix] and [suffix] around an input.
 class PalmUIInputGroup extends StatelessWidget {
+  /// Creates an input group around [child].
   const PalmUIInputGroup({
     super.key,
     required this.child,
@@ -179,8 +231,13 @@ class PalmUIInputGroup extends StatelessWidget {
     this.suffix,
   });
 
+  /// The input, usually a [PalmUIInput] with `bordered: false`.
   final Widget child;
+
+  /// A widget before the input, such as an icon or currency symbol.
   final Widget? prefix;
+
+  /// A widget after the input, such as a unit or button.
   final Widget? suffix;
 
   @override
@@ -236,7 +293,12 @@ class PalmUIInputGroup extends StatelessWidget {
   }
 }
 
+/// A row of single-character boxes for one-time codes.
+///
+/// Focus moves to the next box as the user types, and pasted codes are spread
+/// across the boxes.
 class PalmUIInputOtp extends StatefulWidget {
+  /// Creates a one-time code input with [length] boxes.
   const PalmUIInputOtp({
     super.key,
     this.length = 6,
@@ -244,8 +306,13 @@ class PalmUIInputOtp extends StatefulWidget {
     this.onCompleted,
   });
 
+  /// The number of characters. Defaults to 6.
   final int length;
+
+  /// Called with the current code whenever a box changes.
   final ValueChanged<String>? onChanged;
+
+  /// Called with the full code once every box is filled.
   final ValueChanged<String>? onCompleted;
 
   @override
@@ -291,7 +358,7 @@ class _PalmUIInputOtpState extends State<PalmUIInputOtp> {
       for (var i = 0; i < chars.length && index + i < widget.length; i++) {
         _controllers[index + i].text = chars[i];
       }
-      final next = mathMin(index + chars.length, widget.length - 1);
+      final next = _min(index + chars.length, widget.length - 1);
       _nodes[next].requestFocus();
       _emit();
       return;
@@ -328,28 +395,51 @@ class _PalmUIInputOtpState extends State<PalmUIInputOtp> {
   }
 }
 
-int mathMin(int a, int b) => a < b ? a : b;
+int _min(int a, int b) => a < b ? a : b;
 
+/// A themed checkbox with an optional text label.
+///
+/// The whole row, label included, is the tap target. It is announced as a
+/// checkbox with its checked state and label, and can be toggled with the
+/// keyboard. It is disabled when [onChanged] is null.
 class PalmUICheckbox extends StatelessWidget {
+  /// Creates a checkbox.
   const PalmUICheckbox({
     super.key,
     required this.value,
     required this.onChanged,
     this.label,
+    this.semanticLabel,
   });
 
+  /// Whether the checkbox is checked.
   final bool value;
+
+  /// Called with the new value when the user toggles the checkbox. A null
+  /// value disables it.
   final ValueChanged<bool>? onChanged;
+
+  /// Text shown next to the box and used as the accessibility label.
   final String? label;
+
+  /// A screen reader label to use instead of [label], for example when the
+  /// checkbox has no visible label.
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
     final theme = PalmUITheme.of(context);
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => onChanged?.call(!value),
+    final onChanged = this.onChanged;
+    return PalmUITapTarget(
+      onTap: onChanged == null ? null : () => onChanged(!value),
+      checked: value,
+      semanticLabel: semanticLabel ?? label,
+      excludeChildSemantics: true,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: kPalmUIMinTouchTarget),
+        constraints: const BoxConstraints(
+          minWidth: kPalmUIMinTouchTarget,
+          minHeight: kPalmUIMinTouchTarget,
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -385,7 +475,9 @@ class PalmUICheckbox extends StatelessWidget {
   }
 }
 
+/// Groups [PalmUIRadio] buttons that share one selected [value].
 class PalmUIRadioGroup<T> extends StatelessWidget {
+  /// Creates a radio group.
   const PalmUIRadioGroup({
     super.key,
     required this.value,
@@ -393,8 +485,14 @@ class PalmUIRadioGroup<T> extends StatelessWidget {
     required this.children,
   });
 
+  /// The selected value, or null when nothing is selected.
   final T? value;
+
+  /// Called with the value of the radio the user selects. A null value
+  /// disables every radio in the group.
   final ValueChanged<T>? onChanged;
+
+  /// The group content, usually [PalmUIRadio] widgets.
   final List<Widget> children;
 
   @override
@@ -430,10 +528,18 @@ class _PalmUIRadioScope<T> extends InheritedWidget {
       oldWidget.value != value;
 }
 
+/// A radio button with a text label, used inside a [PalmUIRadioGroup].
+///
+/// It is announced as a radio button with its checked state and [label].
 class PalmUIRadio<T> extends StatelessWidget {
+  /// Creates a radio button for [value].
   const PalmUIRadio({super.key, required this.value, required this.label});
 
+  /// The value this radio represents. It is checked when it equals the
+  /// group's value.
   final T value;
+
+  /// Text shown next to the radio and used as its accessibility label.
   final String label;
 
   @override
@@ -441,9 +547,13 @@ class PalmUIRadio<T> extends StatelessWidget {
     final scope = _PalmUIRadioScope.maybeOf<T>(context);
     final selected = scope?.value == value;
     final theme = PalmUITheme.of(context);
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => scope?.onChanged?.call(value),
+    final onChanged = scope?.onChanged;
+    return PalmUITapTarget(
+      onTap: onChanged == null ? null : () => onChanged(value),
+      checked: selected,
+      inMutuallyExclusiveGroup: true,
+      semanticLabel: label,
+      excludeChildSemantics: true,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: kPalmUIMinTouchTarget,
@@ -488,18 +598,40 @@ class PalmUIRadio<T> extends StatelessWidget {
   }
 }
 
+/// A themed on/off switch.
+///
+/// It is announced as a switch with its on/off state and can be toggled with the
+/// keyboard. It is disabled when [onChanged] is null. Give it a
+/// [semanticLabel], or put it next to a text label, so screen reader users know
+/// what it controls.
 class PalmUISwitch extends StatelessWidget {
-  const PalmUISwitch({super.key, required this.value, required this.onChanged});
+  /// Creates a switch.
+  const PalmUISwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    this.semanticLabel,
+  });
 
+  /// Whether the switch is on.
   final bool value;
+
+  /// Called with the new value when the user toggles the switch. A null value
+  /// disables it.
   final ValueChanged<bool>? onChanged;
+
+  /// The label announced by screen readers, for example `Notifications`.
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
     final theme = PalmUITheme.of(context);
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => onChanged?.call(!value),
+    final onChanged = this.onChanged;
+    return PalmUITapTarget(
+      onTap: onChanged == null ? null : () => onChanged(!value),
+      toggled: value,
+      semanticLabel: semanticLabel,
+      borderRadius: BorderRadius.circular(999),
       child: SizedBox(
         width: 52,
         height: kPalmUIMinTouchTarget,
@@ -533,7 +665,9 @@ class PalmUISwitch extends StatelessWidget {
   }
 }
 
+/// A themed slider for choosing a value between [min] and [max].
 class PalmUISlider extends StatelessWidget {
+  /// Creates a slider.
   const PalmUISlider({
     super.key,
     required this.value,
@@ -542,9 +676,16 @@ class PalmUISlider extends StatelessWidget {
     this.max = 1,
   });
 
+  /// The current value. It is clamped to the [min] to [max] range.
   final double value;
+
+  /// Called while the user drags. A null value disables the slider.
   final ValueChanged<double>? onChanged;
+
+  /// The smallest value. Defaults to 0.
   final double min;
+
+  /// The largest value. Defaults to 1.
   final double max;
 
   @override
@@ -571,7 +712,9 @@ class PalmUISlider extends StatelessWidget {
   }
 }
 
+/// A two-state button that stays highlighted while [pressed].
 class PalmUIToggle extends StatelessWidget {
+  /// Creates a toggle button.
   const PalmUIToggle({
     super.key,
     required this.pressed,
@@ -579,8 +722,13 @@ class PalmUIToggle extends StatelessWidget {
     required this.child,
   });
 
+  /// Whether the toggle is currently on.
   final bool pressed;
+
+  /// Called when the toggle is tapped. A null value disables it.
   final VoidCallback? onPressed;
+
+  /// The toggle content, usually an icon or short text.
   final Widget child;
 
   @override
@@ -616,7 +764,9 @@ class PalmUIToggle extends StatelessWidget {
   }
 }
 
+/// A row of [PalmUIToggle] buttons where one item is selected.
 class PalmUIToggleGroup extends StatelessWidget {
+  /// Creates a toggle group from [items].
   const PalmUIToggleGroup({
     super.key,
     required this.items,
@@ -624,8 +774,13 @@ class PalmUIToggleGroup extends StatelessWidget {
     required this.onChanged,
   });
 
+  /// The item labels.
   final List<String> items;
+
+  /// The selected item, or null when none is selected.
   final String? selected;
+
+  /// Called with the item the user taps.
   final ValueChanged<String>? onChanged;
 
   @override
@@ -648,14 +803,21 @@ class PalmUIToggleGroup extends StatelessWidget {
   }
 }
 
+/// An option in a [PalmUISelect].
 class PalmUISelectItem<T> {
+  /// Creates an option with a [value] and display [label].
   const PalmUISelectItem({required this.value, required this.label});
 
+  /// The value passed to [PalmUISelect.onChanged] when picked.
   final T value;
+
+  /// The text shown for the option.
   final String label;
 }
 
+/// A dropdown that lets the user choose one of [items] from a menu.
 class PalmUISelect<T> extends StatelessWidget {
+  /// Creates a select.
   const PalmUISelect({
     super.key,
     required this.items,
@@ -664,9 +826,16 @@ class PalmUISelect<T> extends StatelessWidget {
     this.hint = 'Select',
   });
 
+  /// The options shown in the menu.
   final List<PalmUISelectItem<T>> items;
+
+  /// The selected value, or null to show [hint].
   final T? value;
+
+  /// Called with the value of the option the user picks.
   final ValueChanged<T>? onChanged;
+
+  /// Text shown when no value is selected. Defaults to `Select`.
   final String hint;
 
   @override
@@ -754,7 +923,9 @@ class _SelectTrigger extends StatelessWidget {
   }
 }
 
+/// A text input that filters [options] as the user types.
 class PalmUICombobox extends StatefulWidget {
+  /// Creates a combobox.
   const PalmUICombobox({
     super.key,
     required this.options,
@@ -763,9 +934,16 @@ class PalmUICombobox extends StatefulWidget {
     this.value,
   });
 
+  /// All options to search.
   final List<String> options;
+
+  /// Called with the option the user picks.
   final ValueChanged<String>? onSelected;
+
+  /// Placeholder text for the search input. Defaults to `Search`.
   final String hint;
+
+  /// The initial text of the search input.
   final String? value;
 
   @override
@@ -822,17 +1000,27 @@ class _PalmUIComboboxState extends State<PalmUICombobox> {
   }
 }
 
+/// An entry in a [PalmUICommand] palette.
 class PalmUICommandItem {
+  /// Creates a command item.
   const PalmUICommandItem({required this.label, this.group});
 
+  /// The command text, also used for searching.
   final String label;
+
+  /// An optional group name for the command.
   final String? group;
 }
 
+/// A searchable command palette.
 class PalmUICommand extends StatefulWidget {
+  /// Creates a command palette with [items].
   const PalmUICommand({super.key, required this.items, this.onSelected});
 
+  /// The commands to search.
   final List<PalmUICommandItem> items;
+
+  /// Called with the command the user picks.
   final ValueChanged<PalmUICommandItem>? onSelected;
 
   @override

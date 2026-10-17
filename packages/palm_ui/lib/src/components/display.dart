@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../theme/palm_ui_theme.dart';
 
+/// A bordered surface that groups related content, with optional header and
+/// footer.
 class PalmUICard extends StatelessWidget {
+  /// Creates a card. All slots are optional.
   const PalmUICard({
     super.key,
     this.child,
@@ -11,9 +14,16 @@ class PalmUICard extends StatelessWidget {
     this.footer,
   });
 
+  /// The main content, shown below the header.
   final Widget? child;
+
+  /// The card heading, styled as a title.
   final Widget? title;
+
+  /// Secondary text shown under [title] in the muted color.
   final Widget? description;
+
+  /// Content pinned to the bottom of the card, such as actions.
   final Widget? footer;
 
   @override
@@ -63,16 +73,34 @@ class PalmUICard extends StatelessWidget {
   }
 }
 
-enum PalmUIBadgeVariant { primary, secondary, destructive, outline }
+/// Visual style of a [PalmUIBadge].
+enum PalmUIBadgeVariant {
+  /// Solid primary color.
+  primary,
 
+  /// Solid secondary color.
+  secondary,
+
+  /// Solid destructive color, for errors and warnings.
+  destructive,
+
+  /// Transparent with a border.
+  outline,
+}
+
+/// A small pill that labels status or counts.
 class PalmUIBadge extends StatelessWidget {
+  /// Creates a badge showing [child].
   const PalmUIBadge({
     super.key,
     required this.child,
     this.variant = PalmUIBadgeVariant.primary,
   });
 
+  /// The badge content, usually a short [Text].
   final Widget child;
+
+  /// The badge style. Defaults to [PalmUIBadgeVariant.primary].
   final PalmUIBadgeVariant variant;
 
   @override
@@ -121,11 +149,18 @@ class PalmUIBadge extends StatelessWidget {
   }
 }
 
+/// A circular avatar that shows an [image] or a [fallback], such as initials.
 class PalmUIAvatar extends StatelessWidget {
+  /// Creates an avatar of diameter [size].
   const PalmUIAvatar({super.key, this.fallback, this.image, this.size = 40});
 
+  /// Shown when [image] is null, usually initials in a [Text].
   final Widget? fallback;
+
+  /// The picture to show, cropped to a circle.
   final ImageProvider? image;
+
+  /// The diameter in logical pixels. Defaults to 40.
   final double size;
 
   @override
@@ -155,9 +190,18 @@ class PalmUIAvatar extends StatelessWidget {
   }
 }
 
-enum PalmUIAlertVariant { neutral, destructive }
+/// Visual style of a [PalmUIAlert].
+enum PalmUIAlertVariant {
+  /// Default foreground colors, for information.
+  neutral,
 
+  /// Destructive colors, for errors.
+  destructive,
+}
+
+/// A callout box with a title, optional description and icon.
 class PalmUIAlert extends StatelessWidget {
+  /// Creates an alert with a [title].
   const PalmUIAlert({
     super.key,
     required this.title,
@@ -166,9 +210,16 @@ class PalmUIAlert extends StatelessWidget {
     this.variant = PalmUIAlertVariant.neutral,
   });
 
+  /// The alert heading.
   final Widget title;
+
+  /// Supporting text shown under [title].
   final Widget? description;
+
+  /// An optional icon shown before the text.
   final IconData? icon;
+
+  /// The alert style. Defaults to [PalmUIAlertVariant.neutral].
   final PalmUIAlertVariant variant;
 
   @override
@@ -227,9 +278,12 @@ class PalmUIAlert extends StatelessWidget {
   }
 }
 
+/// A thin line that separates content.
 class PalmUISeparator extends StatelessWidget {
+  /// Creates a separator along [axis].
   const PalmUISeparator({super.key, this.axis = Axis.horizontal});
 
+  /// The direction of the line. Defaults to [Axis.horizontal].
   final Axis axis;
 
   @override
@@ -245,11 +299,15 @@ class PalmUISeparator extends StatelessWidget {
   }
 }
 
+/// A pulsing placeholder shown while content loads.
 class PalmUISkeleton extends StatefulWidget {
+  /// Creates a skeleton block of [width] by [height].
   const PalmUISkeleton({super.key, this.width, this.height = 16});
 
   /// Null expands to the parent's max width when that max is bounded.
   final double? width;
+
+  /// The height in logical pixels. Defaults to 16.
   final double height;
 
   @override
@@ -286,9 +344,12 @@ class _PalmUISkeletonState extends State<PalmUISkeleton>
   }
 }
 
+/// A small circular progress spinner in the primary color.
 class PalmUISpinner extends StatelessWidget {
+  /// Creates a spinner of the given [size].
   const PalmUISpinner({super.key, this.size = 20});
 
+  /// The diameter in logical pixels. Defaults to 20.
   final double size;
 
   @override
@@ -302,23 +363,48 @@ class PalmUISpinner extends StatelessWidget {
   }
 }
 
+/// Typography styles for [PalmUIText].
 enum PalmUITextVariant {
+  /// Page heading, the largest style.
   h1,
+
+  /// Section heading.
   h2,
+
+  /// Subsection heading.
   h3,
+
+  /// Small heading.
   h4,
+
+  /// Body paragraph text.
   p,
+
+  /// Larger muted introduction text.
   lead,
+
+  /// Large emphasised body text.
   large,
+
+  /// Small text for captions.
   small,
+
+  /// Small text in the muted color.
   muted,
+
+  /// Italic quote with a leading border.
   blockquote,
 }
 
+/// Text in one of the Palm UI typography styles.
 class PalmUIText extends StatelessWidget {
+  /// Creates text showing [text] in the given [variant].
   const PalmUIText(this.text, {super.key, this.variant = PalmUITextVariant.p});
 
+  /// The text to show.
   final String text;
+
+  /// The typography style. Defaults to [PalmUITextVariant.p].
   final PalmUITextVariant variant;
 
   @override
@@ -390,7 +476,9 @@ class PalmUIText extends StatelessWidget {
   }
 }
 
+/// A centred empty state with an icon, title, description and action.
 class PalmUIEmpty extends StatelessWidget {
+  /// Creates an empty state with a [title].
   const PalmUIEmpty({
     super.key,
     required this.title,
@@ -399,9 +487,16 @@ class PalmUIEmpty extends StatelessWidget {
     this.action,
   });
 
+  /// The empty state heading.
   final Widget title;
+
+  /// Supporting text shown under [title].
   final Widget? description;
+
+  /// An optional icon shown above the text.
   final IconData? icon;
+
+  /// An optional widget, usually a button, shown at the bottom.
   final Widget? action;
 
   @override
@@ -442,7 +537,10 @@ class PalmUIEmpty extends StatelessWidget {
   }
 }
 
+/// A tappable row with a title, optional description and leading or trailing
+/// widgets.
 class PalmUIItem extends StatelessWidget {
+  /// Creates an item with a [title].
   const PalmUIItem({
     super.key,
     required this.title,
@@ -452,10 +550,19 @@ class PalmUIItem extends StatelessWidget {
     this.onTap,
   });
 
+  /// The main text of the item.
   final Widget title;
+
+  /// Secondary text shown under [title].
   final Widget? description;
+
+  /// A widget shown before the text, such as an icon or avatar.
   final Widget? leading;
+
+  /// A widget shown after the text, such as a chevron or badge.
   final Widget? trailing;
+
+  /// Called when the item is tapped. When null the item is not tappable.
   final VoidCallback? onTap;
 
   @override
@@ -516,9 +623,12 @@ class PalmUIItem extends StatelessWidget {
   }
 }
 
+/// A keyboard key cap, for showing shortcuts such as `Ctrl` `K`.
 class PalmUIKbd extends StatelessWidget {
+  /// Creates a key cap showing [text].
   const PalmUIKbd(this.text, {super.key});
 
+  /// The key label.
   final String text;
 
   @override
@@ -545,14 +655,19 @@ class PalmUIKbd extends StatelessWidget {
   }
 }
 
+/// Sizes [child] to a fixed width-to-height [ratio].
 class PalmUIAspectRatio extends StatelessWidget {
+  /// Creates an aspect-ratio box.
   const PalmUIAspectRatio({
     super.key,
     required this.ratio,
     required this.child,
   });
 
+  /// The width divided by the height, for example `16 / 9`.
   final double ratio;
+
+  /// The widget to size.
   final Widget child;
 
   @override
@@ -561,14 +676,19 @@ class PalmUIAspectRatio extends StatelessWidget {
   }
 }
 
+/// The filled part of a [PalmUIProgress] bar.
 class PalmUIProgressIndicator extends StatelessWidget {
+  /// Creates a filled bar of [width] in [color].
   const PalmUIProgressIndicator({
     super.key,
     required this.width,
     required this.color,
   });
 
+  /// The filled width in logical pixels.
   final double width;
+
+  /// The fill color.
   final Color color;
 
   @override
@@ -581,7 +701,9 @@ class PalmUIProgressIndicator extends StatelessWidget {
   }
 }
 
+/// A horizontal progress bar.
 class PalmUIProgress extends StatelessWidget {
+  /// Creates a progress bar. A null [value] shows a partial bar.
   const PalmUIProgress({super.key, this.value});
 
   /// From 0 to 1. Null shows an indeterminate partial bar.
@@ -618,10 +740,16 @@ class PalmUIProgress extends StatelessWidget {
   }
 }
 
+/// A bordered, fixed-height area that scrolls its [child] with a visible
+/// scrollbar.
 class PalmUIScrollArea extends StatefulWidget {
+  /// Creates a scroll area of the given [height].
   const PalmUIScrollArea({super.key, required this.child, this.height = 160});
 
+  /// The scrollable content.
   final Widget child;
+
+  /// The height of the area in logical pixels. Defaults to 160.
   final double height;
 
   @override
@@ -661,10 +789,18 @@ class _PalmUIScrollAreaState extends State<PalmUIScrollArea> {
   }
 }
 
+/// A simple bordered table of text with a header row.
+///
+/// Scrolls horizontally when it is wider than the screen. Use
+/// [PalmUIDataTable] for sorting and pagination.
 class PalmUITable extends StatelessWidget {
+  /// Creates a table with [headers] and [rows].
   const PalmUITable({super.key, required this.headers, required this.rows});
 
+  /// The header cell texts.
   final List<String> headers;
+
+  /// The body rows, each a list of cell texts in [headers] order.
   final List<List<String>> rows;
 
   @override
@@ -716,7 +852,9 @@ class PalmUITable extends StatelessWidget {
   }
 }
 
+/// A swipeable horizontal carousel with page indicators.
 class PalmUICarousel extends StatefulWidget {
+  /// Creates a carousel showing [items], one per page.
   const PalmUICarousel({
     super.key,
     required this.items,
@@ -724,8 +862,13 @@ class PalmUICarousel extends StatefulWidget {
     this.onPageChanged,
   });
 
+  /// The pages, one widget each.
   final List<Widget> items;
+
+  /// The carousel height in logical pixels. Defaults to 160.
   final double height;
+
+  /// Called with the new page index when the page changes.
   final ValueChanged<int>? onPageChanged;
 
   @override
