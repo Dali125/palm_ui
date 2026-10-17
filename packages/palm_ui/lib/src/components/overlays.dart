@@ -573,6 +573,10 @@ class PalmUIToaster extends StatefulWidget {
 
 /// State for [PalmUIToaster]. Shows one toast at a time.
 class PalmUIToasterState extends State<PalmUIToaster> {
+  /// Creates the state. Created by [PalmUIToaster]; reach it with
+  /// [PalmUIToaster.of] or [PalmUIToast].
+  PalmUIToasterState();
+
   /// The message currently shown, or null when no toast is visible.
   String? message;
 

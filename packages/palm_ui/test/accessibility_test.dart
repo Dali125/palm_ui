@@ -35,7 +35,7 @@ void main() {
 
       expect(
         tester.getSemantics(find.byType(PalmUICheckbox)),
-        containsSemantics(
+        isSemantics(
           label: 'Accept terms',
           hasCheckedState: true,
           isChecked: false,
@@ -51,7 +51,7 @@ void main() {
       expect(value, isTrue);
       expect(
         tester.getSemantics(find.byType(PalmUICheckbox)),
-        containsSemantics(label: 'Accept terms', isChecked: true),
+        isSemantics(label: 'Accept terms', isChecked: true),
       );
       handle.dispose();
     });
@@ -65,7 +65,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUICheckbox)),
-        containsSemantics(
+        isSemantics(
           label: 'Locked',
           hasCheckedState: true,
           isChecked: true,
@@ -95,7 +95,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUIRadio<String>).first),
-        containsSemantics(
+        isSemantics(
           label: 'Mobile money',
           hasCheckedState: true,
           isChecked: true,
@@ -106,7 +106,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUIRadio<String>).last),
-        containsSemantics(
+        isSemantics(
           label: 'Card',
           hasCheckedState: true,
           isChecked: false,
@@ -129,7 +129,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUISwitch)),
-        containsSemantics(
+        isSemantics(
           label: 'Notifications',
           hasToggledState: true,
           isToggled: true,
@@ -171,7 +171,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUITab).first),
-        containsSemantics(
+        isSemantics(
           label: 'Stock',
           isButton: true,
           hasSelectedState: true,
@@ -181,7 +181,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUITab).last),
-        containsSemantics(
+        isSemantics(
           label: 'Sales',
           isButton: true,
           hasSelectedState: true,
@@ -190,7 +190,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUIBottomNavItem).last),
-        containsSemantics(
+        isSemantics(
           label: 'Profile',
           isButton: true,
           hasSelectedState: true,
@@ -208,7 +208,7 @@ void main() {
       );
       expect(
         tester.getSemantics(find.byType(PalmUIButton)),
-        containsSemantics(
+        isSemantics(
           label: 'Pay now',
           isButton: true,
           hasEnabledState: true,
@@ -258,7 +258,7 @@ void main() {
 
       expect(
         tester.getSemantics(find.byType(PalmUIButton)),
-        containsSemantics(
+        isSemantics(
           label: 'Submit',
           isButton: true,
           hasEnabledState: true,
